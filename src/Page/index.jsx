@@ -2,8 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import * as Tabs from "@radix-ui/react-tabs";
 
-import Tab1 from "./Tab1";
-import Tab2 from "./Tab2";
+import Puzzle from "./Puzzle";
 import "./styles.css";
 
 import { shuffleBoard } from "../components/DragDrop/action";
@@ -19,17 +18,11 @@ const Page = () => {
     <Tabs.Root className="TabsRoot" defaultValue="tab1">
       <Tabs.List className="TabsList" aria-label="Manage your account">
         <Tabs.Trigger className="TabsTrigger" value="tab1">
-          React-draggable
-        </Tabs.Trigger>
-        <Tabs.Trigger className="TabsTrigger" value="tab2">
-          React-dnd
+          React-dnd puzzle
         </Tabs.Trigger>
       </Tabs.List>
       <Tabs.Content className="TabsContent" value="tab1">
-        <Tab1 />
-      </Tabs.Content>
-      <Tabs.Content className="TabsContent" value="tab2">
-        <Tab2 />
+        <Puzzle />
       </Tabs.Content>
     </Tabs.Root>
   );

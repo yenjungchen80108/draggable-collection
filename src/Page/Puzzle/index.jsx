@@ -1,9 +1,9 @@
 import DragDrop from "../../components/DragDrop";
 
-const Tab2 = ({ className }) => (
+const Puzzle = ({ className }) => (
   <div>
     <DragDrop className={className} />
   </div>
 );
 
-export default Tab2;
+export default Puzzle;
