@@ -1,0 +1,6 @@
+.handle {
+  position: relative;
+  width: 320px;
+  height: 100vh;
+  overflow: hidden;
+}
