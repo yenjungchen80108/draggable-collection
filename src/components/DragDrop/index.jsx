@@ -32,15 +32,11 @@ const DragDrop = ({
         // 調整拖曳位置，使其以畫面中心為原點
         const adjustedX = offset.x - centerX;
         const adjustedY = offset.y - centerY;
-        console.log("centerX", centerX, "centerY", centerY);
-        console.log("offset.x", offset.x, "offset.y", offset.y);
-        console.log("adjustedX", adjustedX, "adjustedY", adjustedY);
 
         // 根據調整後的位置計算所在的九宮格位置
         const x = Math.floor((adjustedX + 150) / 100); // 每個格子的寬度為100px，並加上每個格子的一半寬度
         const y = Math.floor((adjustedY + 150) / 100); // 每個格子的高度為100px，並加上每個格子的一半高度
         const position = y * 3 + x - 2; // 計算所在九宮格的位置
-        console.log("x", x, "y", y);
 
         addImageToBoard(item.id, position - 1); // 呼叫 addImageToBoard 函數並傳遞位置參數
       }
