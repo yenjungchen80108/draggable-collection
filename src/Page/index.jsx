@@ -5,13 +5,14 @@ import * as Tabs from "@radix-ui/react-tabs";
 import Puzzle from "./Puzzle";
 import "./styles.css";
 
-import { shuffleBoard } from "../components/DragDrop/action";
-import { PictureList } from "../components/DragDrop/images";
+import { shuffleBoard } from "./Puzzle/DragDrop/action";
+import { PictureList } from "./Puzzle/DragDrop/images";
 
 const Page = () => {
   const dispatch = useDispatch();
+
   useEffect(() => {
-    dispatch(shuffleBoard([...PictureList].sort(() => Math.random() - 0.5)));
+    dispatch(shuffleBoard(PictureList));
   }, []);
 
   return (
