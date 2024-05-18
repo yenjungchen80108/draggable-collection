@@ -2,6 +2,16 @@ const initialState = {
   initialBoard: [],
   board: [],
   puzzle: Array.from({ length: 9 }, () => ({})),
+  puzzleItemList: [],
+};
+
+const findIndexAdapter = (list) => {
+  return list.reduce((indices, item, index) => {
+    if (item.id !== undefined) {
+      indices.push(index);
+    }
+    return indices;
+  }, []);
 };
 
 const puzzleReducer = (state = initialState, action) => {
@@ -19,14 +29,14 @@ const puzzleReducer = (state = initialState, action) => {
 
     case "ADD_IMAGE_TO_BOARD":
       const pictureIdToAdd = action.payload;
+      const targetPosition = action.position;
+
       const pictureToRemoveIndex = state.board.findIndex(
         (item) => item.id === pictureIdToAdd
       );
 
       if (pictureToRemoveIndex !== -1) {
-        const isDuplicate = state.puzzle.some(
-          (item) => item.id === pictureIdToAdd
-        );
+        const isDuplicate = state.puzzleItemList.includes(targetPosition);
 
         if (!isDuplicate) {
           const newBoard = state.board.map((item, index) => {
@@ -36,7 +46,7 @@ const puzzleReducer = (state = initialState, action) => {
           });
 
           const newPuzzle = state.puzzle.map((item, index) => {
-            return index === action.position
+            return index === targetPosition
               ? state.board[pictureToRemoveIndex]
               : item;
           });
@@ -45,6 +55,7 @@ const puzzleReducer = (state = initialState, action) => {
             ...state,
             board: newBoard, // delete drag item
             puzzle: newPuzzle, // add drag item
+            puzzleItemList: findIndexAdapter(newPuzzle),
           };
         }
       }
@@ -56,6 +67,7 @@ const puzzleReducer = (state = initialState, action) => {
         initialBoard: [...state.initialBoard],
         board: [...state.initialBoard],
         puzzle: Array.from({ length: 9 }, () => ({})),
+        puzzleItemList: [],
       };
     default:
       return state;
