@@ -17,9 +17,7 @@ const findIndexAdapter = (list) => {
 const puzzleReducer = (state = initialState, action) => {
   switch (action.type) {
     case "SHUFFLE_BOARD":
-      const shuffledBoard = action.payload
-        .slice()
-        .sort(() => Math.random() - 0.5);
+      const shuffledBoard = [...action.payload].sort(() => Math.random() - 0.5);
 
       return {
         ...state,
@@ -28,15 +26,14 @@ const puzzleReducer = (state = initialState, action) => {
       };
 
     case "ADD_IMAGE_TO_BOARD":
-      const pictureIdToAdd = action.payload;
-      const targetPosition = action.position;
+      const { id, position } = action.payload;
 
       const pictureToRemoveIndex = state.board.findIndex(
-        (item) => item.id === pictureIdToAdd
+        (item) => item.id === id
       );
 
       if (pictureToRemoveIndex !== -1) {
-        const isDuplicate = state.puzzleItemList.includes(targetPosition);
+        const isDuplicate = state.puzzleItemList.includes(position);
 
         if (!isDuplicate) {
           const newBoard = state.board.map((item, index) => {
@@ -46,7 +43,7 @@ const puzzleReducer = (state = initialState, action) => {
           });
 
           const newPuzzle = state.puzzle.map((item, index) => {
-            return index === targetPosition
+            return index === position
               ? state.board[pictureToRemoveIndex]
               : item;
           });

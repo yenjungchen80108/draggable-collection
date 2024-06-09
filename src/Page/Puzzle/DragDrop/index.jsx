@@ -31,6 +31,8 @@ const DragDrop = ({ className }) => {
         // calculate x, y position
         const x = Math.floor((adjustedX + 150) / 100);
         const y = Math.floor((adjustedY + 150) / 100);
+
+        // get the puzzle index from X, Y position
         const position = y * 3 + x - 2;
 
         dispatch(addImageToBoard(item.id, position - 1));
