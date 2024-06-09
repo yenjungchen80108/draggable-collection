@@ -4,7 +4,7 @@ This project demonstrates how to create a basic puzzle game using React and the 
 
 ## Installation
 
-First, you need to install the necessary dependencies. You can do this by running the following command:
+First, install the necessary dependencies. You can do this by running the following command:
 
 ```
 npm install react-dnd react-dnd-html5-backend
