@@ -64,7 +64,7 @@ input {
   width: 375px;
   margin: 0 auto;
   outline: none;
-  overflow: hidden;
+  overflow: scroll;
 }
 /* .TabsContent:focus {
   box-shadow: 0 0 0 2px black;

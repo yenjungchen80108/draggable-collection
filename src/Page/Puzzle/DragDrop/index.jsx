@@ -9,7 +9,8 @@ import { Button } from "@radix-ui/themes";
 const puzzleState = (state) => state.puzzle;
 
 const DragDrop = ({ className }) => {
-  const { board, puzzle, puzzleItemList } = useSelector(puzzleState);
+  const { board, puzzle, puzzleItemList, isPuzzleComplete } =
+    useSelector(puzzleState);
   const dispatch = useDispatch();
   const isFinished = puzzleItemList?.length === 9;
 
@@ -70,6 +71,12 @@ const DragDrop = ({ className }) => {
         Clear
       </Button>
       {isFinished && <div>Complete puzzle!</div>}
+      <div className="result-text">
+        {isPuzzleComplete && <span>{"Successfully placed the puzzle!"}</span>}
+        {isPuzzleComplete === false && (
+          <span>{"Wrong pieces are placed,\nplease try again :)"}</span>
+        )}
+      </div>
     </div>
   );
 };
@@ -114,5 +121,10 @@ export default styled(DragDrop)`
 
   .clear-btn {
     margin-bottom: 10px;
+  }
+
+  .result-text {
+    color: #ff0088;
+    white-space: pre-wrap;
   }
 `;

@@ -3,6 +3,7 @@ const initialState = {
   board: [],
   puzzle: Array.from({ length: 9 }, () => ({})),
   puzzleItemList: [],
+  isPuzzleComplete: null,
 };
 
 const findIndexAdapter = (list) => {
@@ -12,6 +13,15 @@ const findIndexAdapter = (list) => {
     }
     return indices;
   }, []);
+};
+
+const checkPuzzleComplete = (puzzle) => {
+  for (let i = 0; i < puzzle.length; i++) {
+    if (puzzle[i].id !== i + 1) {
+      return false;
+    }
+  }
+  return true;
 };
 
 const puzzleReducer = (state = initialState, action) => {
@@ -26,14 +36,15 @@ const puzzleReducer = (state = initialState, action) => {
       };
 
     case "ADD_IMAGE_TO_BOARD":
-      const { id, position } = action.payload;
+      const pictureIdToAdd = action.payload;
+      const targetPosition = action.position;
 
       const pictureToRemoveIndex = state.board.findIndex(
-        (item) => item.id === id
+        (item) => item.id === pictureIdToAdd
       );
 
       if (pictureToRemoveIndex !== -1) {
-        const isDuplicate = state.puzzleItemList.includes(position);
+        const isDuplicate = state.puzzleItemList.includes(targetPosition);
 
         if (!isDuplicate) {
           const newBoard = state.board.map((item, index) => {
@@ -43,16 +54,22 @@ const puzzleReducer = (state = initialState, action) => {
           });
 
           const newPuzzle = state.puzzle.map((item, index) => {
-            return index === position
+            return index === targetPosition
               ? state.board[pictureToRemoveIndex]
               : item;
           });
+
+          const isComplete =
+            state.puzzleItemList.length === 8
+              ? checkPuzzleComplete(newPuzzle)
+              : null;
 
           return {
             ...state,
             board: newBoard, // delete drag item
             puzzle: newPuzzle, // add drag item
             puzzleItemList: findIndexAdapter(newPuzzle),
+            isPuzzleComplete: isComplete,
           };
         }
       }
@@ -65,6 +82,7 @@ const puzzleReducer = (state = initialState, action) => {
         board: [...state.initialBoard],
         puzzle: Array.from({ length: 9 }, () => ({})),
         puzzleItemList: [],
+        isPuzzleComplete: null,
       };
     default:
       return state;
